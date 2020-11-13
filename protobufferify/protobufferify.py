@@ -1,6 +1,7 @@
 from decimal import Decimal
 from google.protobuf.internal.containers import BaseContainer
 from google.protobuf.message import Message
+from google.protobuf.pyext._message import RepeatedCompositeContainer
 from google.protobuf.reflection import GeneratedProtocolMessageType
 
 
@@ -15,7 +16,7 @@ def unprotobufferify(protobuf_obj) -> dict:
         for field in fields:
             ed[field[0].name] = unprotobufferify(field[1])
         return ed
-    elif isinstance(protobuf_obj, BaseContainer):
+    elif isinstance(protobuf_obj, (BaseContainer, RepeatedCompositeContainer)):
         data = []
         for element in protobuf_obj:
             ed = unprotobufferify(element)
